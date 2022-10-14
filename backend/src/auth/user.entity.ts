@@ -2,7 +2,6 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -35,7 +34,6 @@ export class User {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany((type) => Transaction, (transaction) => transaction.user)
-  @JoinColumn()
+  @OneToMany(() => Transaction, (transaction) => transaction.user)
   transactions: Transaction[];
 }

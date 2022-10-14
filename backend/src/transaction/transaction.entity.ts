@@ -2,8 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
-  OneToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -33,10 +32,10 @@ export class Transaction {
   orderType: string;
 
   @Column()
-  endDate: Date;
+  endDate: string;
 
   @Column()
-  negociationDate: Date;
+  negociationDate: string;
 
   @Column()
   order: string;
@@ -47,7 +46,6 @@ export class Transaction {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany((type) => User, (user) => user.transactions)
-  @JoinColumn()
+  @ManyToOne(() => User, (user) => user.transactions)
   user: User;
 }

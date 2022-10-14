@@ -20,6 +20,15 @@ export class User {
   @Column()
   password: string;
 
+  @Column()
+  email: string;
+
+  @Column()
+  fullName: string;
+
+  @Column()
+  telephoneNumber: string;
+
   @CreateDateColumn()
   createdAt: Date;
 

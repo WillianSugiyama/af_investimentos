@@ -18,7 +18,7 @@ export default function Index() {
   const handleClick = () => setShow(!show);
   const loginAPI = async () => {
       const res = await login(email, password)
-      console.log(res)
+
       if(res) {
         router.push('/dashboard')
         return;

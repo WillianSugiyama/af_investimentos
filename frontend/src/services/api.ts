@@ -2,11 +2,11 @@ import Axios from "axios";
 
 let urls = {
   development: "http://localhost:8090/",
-  production: "https://api.example.com/",
+  production: "ec2-54-233-160-22.sa-east-1.compute.amazonaws.com:8090/",
 };
 
 const api = Axios.create({
-  baseURL: urls.development,
+  baseURL: urls.production,
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",

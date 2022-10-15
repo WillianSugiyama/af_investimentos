@@ -19,10 +19,16 @@ export class AuthController {
     return this.usersService.signup(user);
   }
 
-  @UseGuards(AuthGuard('local'))
   @Post('login')
-  async login(@Request() req) {
-    return this.usersService.login(req.user);
+  async login(@Body() login: any) {
+    return this.usersService.login(login.username, login.password);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('/me')
+  async me(@Request() req) {
+    console.log(req.user);
+    return req.user;
   }
 
   @UseGuards(AuthGuard('jwt'))

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
@@ -13,16 +13,26 @@ export class AuthService {
   ) {}
 
   async signup(user: User): Promise<User> {
+    const foundUser = await this.userRepository.findOne({
+      where: { email: user.email },
+    });
+
+    if (foundUser) {
+      throw new HttpException('User already exists', 400);
+    }
+
     const salt = await bcrypt.genSalt();
     const hash = await bcrypt.hash(user.password, salt);
     user.password = hash;
     return await this.userRepository.save(user);
   }
 
-  async validateUser(username: string, password: string): Promise<any> {
+  async validateUser(username: string, password: string): Promise<User> {
     const foundUser = await this.userRepository.findOne({
       where: { username },
     });
+
+    console.log('foundUser', foundUser);
 
     if (foundUser) {
       if (await bcrypt.compare(password, foundUser.password)) {
@@ -34,8 +44,14 @@ export class AuthService {
     }
     return null;
   }
-  async login(user: any) {
-    const payload = { username: user.username, sub: user.id, role: user.role };
+  async login(username: string, password: any) {
+    const validateUser = await this.validateUser(username, password);
+
+    if (!validateUser) {
+      throw new HttpException('Invalid credentials', 401);
+    }
+
+    const payload = { username, id: validateUser.id, userId: validateUser.id };
 
     return {
       access_token: this.jwtService.sign(payload),

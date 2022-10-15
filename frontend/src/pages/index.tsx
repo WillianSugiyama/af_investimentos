@@ -29,7 +29,7 @@ export default function Index() {
         username: email,
       }
 
-      const res = await fetch('http://ec2-54-233-160-22.sa-east-1.compute.amazonaws.com:8090/api/v1/auth/signup', {
+      const res = await fetch('https://afbe.rehl-city.net/api/v1/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

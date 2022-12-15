@@ -93,13 +93,13 @@ function EditModal(props) {
       setTest({
         category: "",
         broker: "",
-        quantity: "",
+        quantity: 0,
         negociationDate: "",
         order: "",
-        price: "",
+        price: 0,
         orderType: "",
         endDate: "",
-        total: "",
+        total: 0,
         id: "",
       });
 

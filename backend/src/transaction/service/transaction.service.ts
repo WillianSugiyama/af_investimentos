@@ -25,12 +25,17 @@ export class TransactionService {
   ): Promise<Transaction> {
     const user = await this.userRepository.findOne({ where: { id: userId } });
 
+    delete transaction.id;
+
+    const transactionTotal = transaction.price * transaction.quantity;
+
     if (!user) {
       throw new HttpException('User not found', 404);
     }
 
     return await this.transactionRepository.save({
       ...transaction,
+      total: transactionTotal,
       user: user,
     });
   }
@@ -43,13 +48,17 @@ export class TransactionService {
       where: { id: transactionId },
     });
 
+    delete transactionData.id;
+
     if (!transaction) {
       throw new HttpException('Transaction not found', 404);
     }
+    const transactionTotal = transactionData.price * transactionData.quantity;
 
-    const transactionToUpdate = {
+    const transactionToUpdate: Transaction = {
       ...transaction,
       ...transactionData,
+      total: transactionTotal,
     };
 
     return await this.transactionRepository.save(transactionToUpdate);
@@ -80,9 +89,9 @@ export class TransactionService {
 
     transactions.forEach((transaction) => {
       if (transaction.orderType === 'buy') {
-        totals.buys += transaction.price;
+        totals.buys += transaction.price * transaction.quantity;
       } else if (transaction.orderType === 'sell') {
-        totals.sells += transaction.price;
+        totals.sells += transaction.price * transaction.quantity;
       }
 
       totals.totals += transaction.price;

@@ -2,7 +2,7 @@ import Axios from "axios";
 
 let urls = {
   development: "http://localhost:8090/",
-  production: "http://localhost:8090/",
+  production: "https://afinvestimentos-production.up.railway.app/",
 };
 
 const api = Axios.create({

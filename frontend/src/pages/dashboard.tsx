@@ -428,7 +428,9 @@ function Dashboard() {
                       {orders.map((order, index) => {
                         return (
                           <Tr key={index}>
-                            <Td fontSize="12px">{order.category}</Td>
+                            <Td fontSize="12px">
+                              {order.category === "action" ? "Ações" : "FIIs"}
+                            </Td>
                             <Td fontSize="12px">{order.order}</Td>
                             <Td fontSize="12px">
                               {order.orderType === "buy" ? "Compra" : "Venda"}
@@ -437,8 +439,25 @@ function Dashboard() {
                             <Td fontSize="12px">{order.negociationDate}</Td>
                             <Td fontSize="12px">{order.endDate}</Td>
                             <Td fontSize="12px">{order.quantity}</Td>
-                            <Td fontSize="12px">{order.price}</Td>
-                            <Td fontSize="12px">{order.total}</Td>
+                            <Td fontSize="12px">
+                              <CurrencyFormat
+                                value={order.price}
+                                displayType={"text"}
+                                thousandSeparator={true}
+                                prefix={"R$"}
+                                renderText={(value) => `  ${value}`}
+                              />
+                            </Td>
+                            <Td fontSize="12px">
+                              {" "}
+                              <CurrencyFormat
+                                value={order.total}
+                                displayType={"text"}
+                                thousandSeparator={true}
+                                prefix={"R$"}
+                                renderText={(value) => `  ${value}`}
+                              />
+                            </Td>
                             <Td>
                               <Icon
                                 w={3}

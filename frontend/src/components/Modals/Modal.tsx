@@ -31,13 +31,13 @@ function EditModal(props) {
   const [test, setTest] = useState({
     category: "",
     broker: "",
-    quantity: "",
+    quantity: 0,
     negociationDate: "",
     order: "",
-    price: "",
+    price: 0,
     orderType: "",
     endDate: "",
-    total: "",
+    total: 0,
     id: "",
   });
 
@@ -57,7 +57,8 @@ function EditModal(props) {
     setTest({ ...test, orderType: e.target.value });
   const handleEndDateChange = (e) =>
     setTest({ ...test, endDate: e.target.value });
-  const handleTotalChange = (e) => setTest({ ...test, total: e.target.value });
+  const handleTotalChange = () =>
+    setTest({ ...test, total: test.price * test.quantity });
 
   const handleInput = async () => {
     if (props.isEdit) {
@@ -144,13 +145,13 @@ function EditModal(props) {
       setTest({
         category: "",
         broker: "",
-        quantity: "",
+        quantity: 0,
         negociationDate: "",
         order: "",
-        price: "",
+        price: 0,
         orderType: "",
         endDate: "",
-        total: "",
+        total: 0,
         id: "",
       });
 
@@ -194,13 +195,13 @@ function EditModal(props) {
       setTest({
         category: "",
         broker: "",
-        quantity: "",
+        quantity: 0,
         negociationDate: "",
         order: "",
-        price: "",
+        price: 0,
         orderType: "",
         endDate: "",
-        total: "",
+        total: 0,
         id: "",
       });
 
@@ -219,9 +220,11 @@ function EditModal(props) {
   };
 
   useEffect(() => {
-    console.log("PROPS", props);
     if (props.isEdit || props.isDelete) {
-      setTest(props.order);
+      setTest({
+        ...props.order,
+        total: props.order.price * props.order.quantity,
+      });
     }
   }, [props]);
 
@@ -322,7 +325,7 @@ function EditModal(props) {
                 <FormLabel>Preço</FormLabel>
                 <Input
                   placeholder="Preço"
-                  type="text"
+                  type="number"
                   value={test.price}
                   onChange={handlePriceChange}
                 />
@@ -355,12 +358,7 @@ function EditModal(props) {
               </FormControl>
               <FormControl>
                 <FormLabel>Total</FormLabel>
-                <Input
-                  placeholder="Total"
-                  type="text"
-                  value={test.total}
-                  onChange={handleTotalChange}
-                />
+                {test.price * test.quantity}
               </FormControl>
             </Flex>
           </ModalBody>

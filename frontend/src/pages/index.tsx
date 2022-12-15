@@ -37,6 +37,16 @@ export default function Index() {
       username: email,
     };
 
+    if (email.length <= 0 && password.length <= 0) {
+      toast({
+        title: "Email e senha são campos obrigatórios",
+        description: "Email e senha são campos obrigatórios",
+        status: "error",
+        duration: 1500,
+        isClosable: true,
+      });
+    }
+
     const res = await fetch(
       "https://afinvestimentos-production.up.railway.app/api/v1/auth/signup",
       {

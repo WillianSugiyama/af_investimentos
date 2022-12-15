@@ -37,13 +37,16 @@ export default function Index() {
       username: email,
     };
 
-    const res = await fetch("http://localhost:8090/api/v1/auth/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    const res = await fetch(
+      "https://afinvestimentos-production.up.railway.app/api/v1/auth/signup",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
 
     if (res.status === 201) {
       toast({

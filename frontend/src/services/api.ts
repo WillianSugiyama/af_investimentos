@@ -1,7 +1,7 @@
 import Axios from "axios";
 
 let urls = {
-  development: "http://localhost:8090/",
+  development: "https://afinvestimentos-production.up.railway.app/",
   production: "https://afinvestimentos-production.up.railway.app/",
 };
 

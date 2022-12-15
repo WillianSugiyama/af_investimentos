@@ -27,7 +27,6 @@ export class AuthController {
   @UseGuards(AuthGuard('jwt'))
   @Get('/me')
   async me(@Request() req) {
-    console.log(req.user);
     return req.user;
   }
 

@@ -32,12 +32,10 @@ export class AuthService {
       where: { username },
     });
 
-    console.log('foundUser', foundUser);
-
     if (foundUser) {
       if (await bcrypt.compare(password, foundUser.password)) {
         const { ...result } = foundUser;
-        return result;
+        return { ...result, fullName: foundUser.fullName };
       }
 
       return null;
@@ -51,7 +49,12 @@ export class AuthService {
       throw new HttpException('Invalid credentials', 401);
     }
 
-    const payload = { username, id: validateUser.id, userId: validateUser.id };
+    const payload = {
+      username,
+      id: validateUser.id,
+      userId: validateUser.id,
+      fullName: validateUser.fullName,
+    };
 
     return {
       access_token: this.jwtService.sign(payload),
